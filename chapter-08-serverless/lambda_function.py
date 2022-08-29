@@ -5,7 +5,7 @@ from keras_image_helper import create_preprocessor
 preprocessor = create_preprocessor('xception', target_size=(299, 299))
 
 
-interpreter = tflite.Interpreter(model_path='clothing-model-v4.tflite')
+interpreter = tflite.Interpreter(model_path='clothing-model.tflite')
 interpreter.allocate_tensors()
 
 input_details = interpreter.get_input_details()
@@ -47,6 +47,4 @@ def lambda_handler(event, context):
     preds = predict(X)
     results = decode_predictions(preds)
     return results
-
-
 

@@ -8,7 +8,6 @@ def predict_single(customer, dv, model):
     y_pred = model.predict_proba(X)[:, 1]
     return y_pred[0]
 
-
 with open('churn-model.bin', 'rb') as f_in:
     dv, model = pickle.load(f_in)
 

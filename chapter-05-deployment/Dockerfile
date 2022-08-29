@@ -1,18 +1,19 @@
-FROM python:3.7.5-slim
+FROM python:3.8.13-buster
 
 ENV PYTHONUNBUFFERED=TRUE
 
-RUN pip --no-cache-dir install pipenv
+RUN pip install -U pip
+RUN pip install poetry
 
 WORKDIR /app
 
-COPY ["Pipfile", "Pipfile.lock", "./"]
-RUN pipenv install --deploy --system && \
-    rm -rf /root/.cache
-
+COPY [ "pyproject.toml", "poetry.lock", "./" ]
 COPY ["*.py", "churn-model.bin", "./"]
+
+RUN poetry config virtualenvs.create false
+RUN poetry install --no-interaction
 
 EXPOSE 9696
 
-ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:9696", "churn_serving:app"] 
+ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:9696", "churn_serving:app"]
 

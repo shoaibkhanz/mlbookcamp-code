@@ -7,7 +7,7 @@ customer = {
     'seniorcitizen': 0,
     'partner': 'no',
     'dependents': 'no',
-    'tenure': 41,
+    'tenure': 21,
     'phoneservice': 'yes',
     'multiplelines': 'no',
     'internetservice': 'dsl',
@@ -23,8 +23,8 @@ customer = {
     'monthlycharges': 79.85,
     'totalcharges': 3320.75
 }
-
-url = 'http://localhost:9696/predict'
+host = "churn-serving-env.eba-4tgpqwqv.eu-west-1.elasticbeanstalk.com"
+url = f'http://{host}/predict'
 response = requests.post(url, json=customer)
 result = response.json()
 
